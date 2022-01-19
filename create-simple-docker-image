@@ -1,4 +1,5 @@
-run on localhost/ansi-server
+run on localhost/ansi-server(limt to local host) and uplaod to dockerhub
+=====================================================================
 ---
  - hosts: all
    become: true
