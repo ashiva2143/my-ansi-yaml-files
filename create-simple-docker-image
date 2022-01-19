@@ -1,0 +1,19 @@
+run on localhost/ansi-server
+---
+ - hosts: all
+   become: true
+   tasks:
+    - name: create docker image using war file
+      command: docker build -t simple-devops-image:latest .
+      args:
+        chdir: /opt/docker
+        
+    - name: create tag to image
+      command: docker tag simple-devops-image vikas24775/vikas-cicd
+      
+    - name: push image to docker hub
+      command: docker push vikas24775/vikas-cicd
+      
+    - name: Remove docker image from ansible server
+      command: docker rmi simple-devops-image:latest vikas24775/vikas-cicd
+      ignore_errors: yes
