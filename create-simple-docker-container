@@ -1,0 +1,26 @@
+create-simple-devops-project.yml
+
+run on host servers from ansible server
+======================
+---
+- hosts: all
+  become: true
+
+  tasks:
+   - name: stop current running container
+     command: docker stop simple-devops-container
+     ignore_errors: yes
+
+   - name: remove the stopped container
+     command: docker rm simple-devops-container
+     ignore_errors: yes
+
+   - name: remove the docker image
+     command: docker rmi vikas24775/simple-devops-image:latest
+     ignore_errors: yes
+
+   - name: pull docker image
+     command: docker pull vikas24775/simple-devops-image:latest
+
+   - name: create container using simple-devops-image
+     command: docker run -d --name simple-devops-container -p 8080:8080 vikas24775/simple-devops-image:latest
